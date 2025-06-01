@@ -8,6 +8,7 @@ const Login = () => {
   const [password,setPassword]=useState('')
 
   const {setAtoken,backendUrl}=useContext(AdminContext)
+  
 
   return (
     <form className='min-h-[80vh] flex items-center'>
@@ -19,7 +20,7 @@ const Login = () => {
         </div>
         <div className='w-full'>
           <p>Password</p>
-          <input className='border border-[#DADADA] rounded w-full mt-1 p-2' type="password" required />
+          <input onClick={setPassword(e.target.value)} value={password} className='border border-[#DADADA] rounded w-full mt-1 p-2' type="password" required />
         </div>
         <button className='border border-[#DADADA]  py-1.5 px-5 mx-auto rounded-md text-xl  hover:bg-blue-500 text-gray-700 hover:text-white'>Login</button>
         {
