@@ -80,4 +80,14 @@ const loginAdmin=async(req,res)=>{
     }
 }
 
+//API to get all docter list for admin panel 
+
+const allDoctors=async(req,res)=>{
+    try {   
+        
+    } catch (error) {
+        
+    }
+}
+
 export {addDoctor,loginAdmin}
