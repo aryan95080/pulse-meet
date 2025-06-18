@@ -11,13 +11,16 @@ import Navbar from './components/Navbar'
 import Header from './components/Header'
 import Appointment from './pages/Appointment'
 import Footer from './components/Footer'
+import { ToastContainer, toast } from 'react-toastify';
+ 
 
 const App=()=> {
   return (
     <div className=''>
+      <ToastContainer/>
       <Navbar/>
       <Routes>
-        <Route  path='/' element={<Home/>}/>
+         <Route  path='/' element={<Home/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/doctors' element={<Doctor/>}/>

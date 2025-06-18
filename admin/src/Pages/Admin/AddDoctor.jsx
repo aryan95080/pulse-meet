@@ -34,7 +34,6 @@ const AddDoctor = () => {
       formData.append('password',password);
       formData.append('experience',experience);
       formData.append('fees',Number(fees));
-      formData.append('about',about);
       formData.append('speciality',speciality);
       formData.append('degree',degree);
       formData.append('address',JSON.stringify({line1:address1,line2:address2}));
@@ -136,7 +135,7 @@ const AddDoctor = () => {
           {/* Experience */}
           <div className="flex flex-col gap-1">
             <label>Experience</label>
-            <select onChange={(e)=>setExperience(e.target.value)} className="border rounded px-3 py-2" required>
+            <select onChange={(e)=>setExperience(e.target.value)} value={experience} className="border rounded px-3 py-2" required>
               {[...Array(10)].map((_, i) => (
                 <option key={i} value={`${i + 1} Year`}>
                   {i + 1} Year
@@ -149,7 +148,7 @@ const AddDoctor = () => {
           {/* Fees */}
           <div className="flex flex-col gap-1">
             <label>Fees</label>
-            <input onChange={(e)=>setFees(e.target.value)}
+            <input onChange={(e)=>setFees(e.target.value)} value={fees}
               className="border rounded px-3 py-2"
               type="number"
               placeholder="Fees"
@@ -160,7 +159,7 @@ const AddDoctor = () => {
           {/* Speciality */}
           <div className="flex flex-col gap-1">
             <label>Speciality</label>
-            <select onChange={(e)=>setSpeciality(e.target.value)} className="border rounded px-3 py-2" required>
+            <select onChange={(e)=>setSpeciality(e.target.value)} value={speciality} className="border rounded px-3 py-2" required>
               <option value="General physician">General physician</option>
               <option value="Gynecologist">Gynecologist</option>
               <option value="Dermatologist">Dermatologist</option>
@@ -173,7 +172,7 @@ const AddDoctor = () => {
           {/* Education */}
           <div className="flex flex-col gap-1">
             <label>Education</label>
-            <input onChange={(e)=>setDegree(e.target.value)}
+            <input onChange={(e)=>setDegree(e.target.value)} value={degree}
               className="border rounded px-3 py-2"
               type="text"
               placeholder="Education"
@@ -184,13 +183,13 @@ const AddDoctor = () => {
           {/* Address */}
           <div className="flex flex-col gap-1">
             <label>Address</label>
-            <input onChange={(e)=>setAddress1(e.target.value)}
+            <input onChange={(e)=>setAddress1(e.target.value)} value={address1}
               className="border rounded px-3 py-2"
               type="text"
               placeholder="Address Line 1"
               required
             />
-            <input onChange={(e)=>setAddress2(e.target.value)}
+            <input onChange={(e)=>setAddress2(e.target.value)} value={address2}
               className="border rounded px-3 py-2"
               type="text"
               placeholder="Address Line 2"
@@ -202,7 +201,7 @@ const AddDoctor = () => {
         {/* About Section */}
         <div className="mt-6 flex flex-col gap-1 text-gray-700">
           <label>About</label>
-          <textarea
+          <textarea onChange={(e)=>setAbout(e.target.value)} value={about}
             className="border rounded px-3 py-2"
             placeholder="Write about the doctor"
             rows={5}

@@ -2,6 +2,7 @@ import doctorModel from "../models/doctorModel.js"
 
 
 
+
 const changeAvailiblity=async(req,res)=>{
     try {
         const {docId}=req.body
@@ -14,4 +15,14 @@ const changeAvailiblity=async(req,res)=>{
         res.json({succes:false,message:error.message})
     }
 }
-export {changeAvailiblity}
+
+const doctorList=async()=>{
+    try {
+        const doctors=await doctorModel.find({}).select(['-password','-email'])
+        res.json({succes:true,doctors})
+    } catch (error) {
+        console.log(error)
+        res.json({succes:false,message:error.message})
+    }
+}
+export {changeAvailiblity,doctorList}
