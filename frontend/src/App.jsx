@@ -12,6 +12,7 @@ import Header from './components/Header'
 import Appointment from './pages/Appointment'
 import Footer from './components/Footer'
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
  
 
 const App=()=> {
