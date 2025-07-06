@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { NavLink, useNavigate } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
 const Navbar = () => {
   const navigate = useNavigate();
+
   const [showMenu,setShowMenu]=useState(false)
-  const [token, setToken] = useState(true);
+  const {token,setToken,userData}=useContext(AppContext)
+
+  const logout=()=>{
+    setToken(false)
+    localStorage.removeItem('token')
+  }
+
   return (
     <div className="w-[95%] mx-[2.5%] flex justify-between mt-3 mb-10 px-5 items-center bg-white border-b-5 border-x border-t border-transparent backdrop-blur-2xl shadow-2xl shadow-blue-100 rounded-b-md sticky top-0 z-50">
       <NavLink onClick={scrollTo(0,0)} to="/">
@@ -29,14 +37,15 @@ const Navbar = () => {
         </NavLink>
       </ul>
       <div className="flex flex-row gap-3">
-        {token == true ? (
+        {token&&userData? (
           <div className="rounded-full cursor-pointer group  border-blue-500">
-            <img className="w-8 rounded-full stroke-blue-500 stroke-3" src={assets.profile_pic} alt="" />
+            <img className="w-10 h-10 rounded-full object-cover rounderounded-fullroke-blue-500 stroke-3" src={userData.image} alt="" />
+            {/* <img className="w-2.5" src={assets.dropdown_icon} alt="" /> */}
             <div className="absolute bg-transparent  text-white rounded top-0 right-0 hidden group-hover:block">
-              <div className="mt-15 bg-blue-500 w-41 px-3 py-2 rounded">
+              <div className="mt-15 bg-blue-400 w-41 px-3 py-2 rounded">
               <p onClick={() =>{navigate("/my-profile");scrollTo(0,0)}} className="active:bg-white active:text-blue-600 inline px-3 py-0.5 rounded">My Profile</p><br />
               <p onClick={() =>{navigate("/my-appoinments");scrollTo(0,0)}} className="active:bg-white active:text-blue-600 inline px-3 py-0.5 rounded">My Appoinment</p><br />
-              <p onClick={() => {setToken(false);navigate("/login");}}className="active:bg-white active:text-blue-600 inline px-3 py-0.5 rounded">Logout</p>
+              <p onClick={() => {logout() ;navigate("/login");}}className="active:bg-white active:text-blue-600 inline px-3 py-0.5 rounded">Logout</p>
               </div>
             </div>
           </div>
