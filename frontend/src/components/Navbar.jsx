@@ -42,9 +42,9 @@ const Navbar = () => {
             <img className="w-10 h-10 rounded-full object-cover rounderounded-fullroke-blue-500 stroke-3" src={userData.image} alt="" />
             {/* <img className="w-2.5" src={assets.dropdown_icon} alt="" /> */}
             <div className="absolute bg-transparent  text-white rounded top-0 right-0 hidden group-hover:block">
-              <div className="mt-15 bg-blue-400 w-41 px-3 py-2 rounded">
+              <div className="mt-15 bg-blue-400 w-42 px-3 py-2 rounded">
               <p onClick={() =>{navigate("/my-profile");scrollTo(0,0)}} className="active:bg-white active:text-blue-600 inline px-3 py-0.5 rounded">My Profile</p><br />
-              <p onClick={() =>{navigate("/my-appoinments");scrollTo(0,0)}} className="active:bg-white active:text-blue-600 inline px-3 py-0.5 rounded">My Appoinment</p><br />
+              <p onClick={() =>{navigate("/my-appointments");scrollTo(0,0)}} className="active:bg-white active:text-blue-600 inline px-3 py-0.5 rounded">My Appointment</p><br />
               <p onClick={() => {logout() ;navigate("/login");}}className="active:bg-white active:text-blue-600 inline px-3 py-0.5 rounded">Logout</p>
               </div>
             </div>

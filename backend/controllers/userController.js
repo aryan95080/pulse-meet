@@ -93,7 +93,7 @@ const getProfile=async(req,res)=>{
 //API to update user profile
 const updateProfile=async(req,res)=>{
     try {
-        const userId = req.user.id;
+        const userId = req.body;
         const {name,phone,address,dob,gender}=req.body
         const imageFile=req.file
         
@@ -152,7 +152,10 @@ const bookAppointment=async (req,res)=>{
             amount:docData.fees,
             slotTime,
             slotDate,
-            date:Date.now()
+            date:Date.now(),
+            cancelled:false,
+            payment:false,  
+            isCompleted:false,
         }
 
         const newAppointment=new appointmentModel(appointmentData)
@@ -173,7 +176,7 @@ const bookAppointment=async (req,res)=>{
 // API to get user appointments for frontend my-appointments page
 const listAppointment=async(req,res)=>{
     try {
-        const {userId}=req.user.id;
+        const userId=req.body
         const appointments=await appointmentModel.find({userId})
         res.json({success:true,appointments})
     } catch (error) {
@@ -181,5 +184,29 @@ const listAppointment=async(req,res)=>{
         res.json({success:false,message:error.message})
     }
 }
+// API to Cancel appointment
+const cancelAppointment=async(req,res)=>{
+    try {
+        const {userId,appointmentId}=req.body
+        const appointmentData=await appointmentModel.findById(appointmentId)
+        // verify if appointment belongs to user
+        if(appointmentData.userId !== userId){
+            return res.json({success:false,message:"Unauthorized access"})
+        }
 
-export {registerUser,loginUser,getProfile,updateProfile,bookAppointment,listAppointment}
+        await appointmentModel.findByIdAndUpdate(appointmentId,{cancelled:true})
+
+        // remove slot from doctor's booked slots
+        const {docId,slotDate,slotTime}=appointmentData
+        const doctorData=await doctorModel.findById(docId)
+        let slots_booked=doctorData.slots_booked
+        slots_booked[slotDate]=slots_booked[slotDate].filter(slot=>slot!==slotTime)
+        await doctorModel.findByIdAndUpdate(docId,{slots_booked})
+        res.json({success:true,message:"Appointment cancelled successfully"})
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+}
+
+export {registerUser,loginUser,getProfile,updateProfile,bookAppointment,listAppointment,cancelAppointment}

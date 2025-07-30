@@ -5,13 +5,13 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Doctor from './pages/Doctors'
 import Login from './pages/Login'
-import MyAppoinments from './pages/MyAppoinments'
+import MyAppointments from './pages/MyAppointments'
 import MyProfile from './pages/MyProfile'
 import Navbar from './components/Navbar'
 import Header from './components/Header'
 import Appointment from './pages/Appointment'
 import Footer from './components/Footer'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
  
 
@@ -27,9 +27,10 @@ const App=()=> {
         <Route path='/doctors' element={<Doctor/>}/>
         <Route path='/doctors/:speciality' element={<Doctor/>}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/my-appoinments' element={<MyAppoinments/>}/> 
+        <Route path='/my-appointments' element={<MyAppointments/>}/> 
         <Route path='/appointment/:docId' element={<Appointment/>}/>
         <Route path='/my-profile' element={<MyProfile/>}/>
+        
       </Routes>
       <Footer/>
 
