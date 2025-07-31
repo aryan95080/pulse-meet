@@ -47,12 +47,25 @@ const MyAppointments=()=> {
       toast.error(error.message)
     }
   }
+  
+  const appointmentRazorpay=async(appointmentId)=>{
+    try {
+      const {data}=await axios.post(backendUrl+'/api/user/payment-razorpay',{appointmentId},{headers:{token}})
+    if(data.success){
+      console.log(data.order);
+    }
+      
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+      
+    }
+    
+  }
 
   useEffect(()=>{
       getUerAppointments()
   },[token])
-
-
 
   return (
     <div className='w-[95%] mx-[2.5%]'>
@@ -73,9 +86,9 @@ const MyAppointments=()=> {
             </div>
             <div></div>
             <div className='flex flex-col justify-end gap-5'>
-              {!item.cancelled&&<button className='bg-blue-600  text-sm text-white text-center sm:min-w-48 py-2 border rounded'>Pay Online</button>}
-              {!item.cancelled&&<button onClick={()=>cancelAppointment(item._id)} className='hover:bg-red-600 hover:text-white text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded'>Cancel Appointment</button>}
-              {item.cancelled&&<button className='bg-red-600 text-sm text-white text-center sm:min-w-48 py-2 border rounded'>Cancelled Appointment</button>}
+              {!item.cancelled&&<button onClick={()=>appointmentRazorpay(item._id)} className='bg-blue-600  text-sm text-white text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Pay Online</button>}
+              {!item.cancelled&&<button onClick={()=>cancelAppointment(item._id)} className='hover:bg-red-600 hover:text-white text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Cancel Appointment</button>}
+              {item.cancelled&&<button className='bg-red-600 text-sm text-white text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Cancelled Appointment</button>}
             </div>
           </div>
         ))}
