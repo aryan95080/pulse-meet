@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import {assets} from '../assets/assets'
 import { AdminContext } from '../context/AdminContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -25,12 +24,10 @@ const Login = () => {
           toast.error(data.message)
         }
       }
-      else{
-        
-      }
-      
+   
     } catch (error) {
-      
+      console.log(error)
+      toast.error(error.message) 
     }
   }
 

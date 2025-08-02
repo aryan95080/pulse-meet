@@ -171,7 +171,7 @@ const bookAppointment = async (req, res) => {
 // API to get user appointments for frontend my-appointments page
 const listAppointment = async (req, res) => {
   try {
-    const userId = req.body;
+    const userId = req.user.id; // get userId from token
     const appointments = await appointmentModel.find({ userId });
     res.json({ success: true, appointments });
   } catch (error) {
@@ -230,7 +230,7 @@ const paymentRazorpay = async (req, res) => {
       amount: appointmentData.amount * 100,
       currency: process.env.CURRENCY,
       receipt: appointmentId,
-    };
+    }
     // Creation of an order
     const order = await razorpayInstance.orders.create(options);
     res.json({ success: true, order});
@@ -238,7 +238,28 @@ const paymentRazorpay = async (req, res) => {
     console.log(error);
     return res.json({ success: false, message: error.message });
   }
-};
+}
+
+// API to veryfy payment and update appointment status
+const verifyRazorpay= async (req, res) => {
+  try {
+    const {razorpay_order_id} = req.body;
+    const orderInfo= await razorpayInstance.orders.fetch(razorpay_order_id);
+    //console.log(orderInfo);
+    if(orderInfo.status === 'paid'){
+  await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {
+    payment: true,
+  })
+  res.json({ success: true, message: "Payment Successful"});
+}
+else{
+  res.json({ success: false, message: "Payment Failed"});
+}
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: error.message });
+  }
+}
 
 export {
   registerUser,
@@ -249,4 +270,5 @@ export {
   listAppointment,
   cancelAppointment,
   paymentRazorpay,
+  verifyRazorpay,
 };
