@@ -7,12 +7,15 @@ import { useNavigate } from 'react-router-dom'
 const MyAppointments=()=> {
   const {backendUrl,token,getDoctorsData}=useContext(AppContext)
   const [appointments,setAppointments]=useState([])
+
   const months=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-  const navigate=useNavigate()
+
   const sloteDateFormate=(slotDate)=>{
     const dateArray=slotDate.split('-')
-    return dateArray[0]+" "+months[Number(dateArray[1])-1]+" "+dateArray[2]
+    return `${dateArray[2]} ${months[Number(dateArray[1]) - 1]} ${dateArray[0]}`;
+
   }
+  const navigate=useNavigate()
   const getUerAppointments=async()=>{
     try {
       const {data}=await axios.get(backendUrl+'/api/user/appointments',{headers:{token}})
