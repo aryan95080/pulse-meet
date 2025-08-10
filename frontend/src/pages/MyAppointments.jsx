@@ -16,7 +16,7 @@ const MyAppointments=()=> {
 
   }
   const navigate=useNavigate()
-  const getUerAppointments=async()=>{
+  const getUserAppointments=async()=>{
     try {
       const {data}=await axios.get(backendUrl+'/api/user/appointments',{headers:{token}})
       if(data.success){
@@ -67,7 +67,7 @@ const MyAppointments=()=> {
         try {
           const {data}=await axios.post(backendUrl+'/api/user/verifyRazorpay',response,{headers:{token}})
           if(data.success){
-            getUerAppointments() // Refresh appointments after successful payment
+            getUserAppointments() // Refresh appointments after successful payment
             navigate('/my-appointments')
           }
         } catch (error) {
@@ -97,7 +97,7 @@ const MyAppointments=()=> {
   }
 
   useEffect(()=>{
-      getUerAppointments()
+      getUserAppointments()
   },[token])
 
   return (

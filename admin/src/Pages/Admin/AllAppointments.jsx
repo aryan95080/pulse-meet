@@ -6,7 +6,7 @@ import { AppContext } from "../../context/AppContext";
 
 const AllAppointments = () => {
   const { aToken, appointments, getAllAppointments,cancelAppointment} = useContext(AdminContext);
-  const { calculateAge,sloteDateFormate,currency} = useContext(AppContext);
+  const { calculateAge,slotDateFormate,currency} = useContext(AppContext);
   useEffect(() => {
     getAllAppointments();
   }, [aToken]);
@@ -39,7 +39,7 @@ const AllAppointments = () => {
               <p>{item.userData?.name || "Unknown"}</p>
             </div>
             <p className="max-sm:hidden ">{calculateAge(item.userData?.dob)}</p> 
-            <p>{sloteDateFormate(item.slotDate)},{item.slotTime}</p>
+            <p>{slotDateFormate(item.slotDate)},{item.slotTime}</p>
             <div className="flex items-center gap-2">
               <img
                 className="w-8 rounded-full bg-gray-200"

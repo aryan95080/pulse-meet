@@ -13,14 +13,14 @@ const AppContextProvider=(props)=>{
     }
     const months=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
-  const sloteDateFormate=(slotDate)=>{
+  const slotDateFormate=(slotDate)=>{
     const dateArray=slotDate.split('-')
     return `${dateArray[2]} ${months[Number(dateArray[1]) - 1]} ${dateArray[0] }`;
 
   }
     const value={
         calculateAge,
-        sloteDateFormate,
+        slotDateFormate,
         currency,
         
     }
