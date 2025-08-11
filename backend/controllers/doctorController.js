@@ -51,9 +51,10 @@ const  loginDoctor=async(req,res)=>{
 }
 
 // API for Doctor appointment for doctor panel
-const appointmentDoctor=async(req,res)=>{
+const appointmentsDoctor=async(req,res)=>{
     try {
-        const {docId}=req.body
+        //const {docId}=req.body
+        const docId = req.docId 
         const appointments=await appointmentModel.find({docId})
         res.json({success:true,appointments})
 
@@ -64,4 +65,44 @@ const appointmentDoctor=async(req,res)=>{
     }
 }
 
-export {changeAvailiblity,doctorList,loginDoctor,appointmentDoctor}
+// API for mark appointment as completed for doctor panel
+const appointmentComplete=async()=>{
+    try {
+        const {docId,appointmentId}=req.body
+        const appointmentData=await appointmentModel.findById(appointmentId)
+        if(appointmentData&&appointmentData.docId===docId){
+            await appointmentModel.findByIdAndUpdate(appointmentId,{isCompleted:true})
+            return res.json({success:true,message:'Appointment marked as completed'})
+        }
+        else{
+            return res.json({success:false,message:'Mark Failed'})
+        }
+
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+
+}
+
+// API for cancel appointment for doctor panel
+const appointmentCancel=async()=>{
+    try {
+        const {docId,appointmentId}=req.body
+        const appointmentData=await appointmentModel.findById(appointmentId)
+        if(appointmentData&&appointmentData.docId===docId){
+            await appointmentModel.findByIdAndUpdate(appointmentId,{cancelled:true})
+            return res.json({success:true,message:'Appointment Cancelled'})
+        }
+        else{
+            return res.json({success:false,message:'Cancellation Failed'})
+        }
+
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+
+}
+
+export {changeAvailiblity,doctorList,loginDoctor,appointmentsDoctor,appointmentComplete,appointmentCancel}
