@@ -3,10 +3,11 @@ import { DoctorContext } from '../../context/DoctorContext'
 import { useContext } from 'react'
 import { useEffect } from 'react'
 import {assets} from '../../assets/assets'
+import { AppContext } from '../../context/AppContext'
 
 const DoctorAppointments = () => {
-  const {dToken, getAppointments, appointments} = useContext(DoctorContext)
-  const {calculateAge,slotDateFormat,currency} = useContext(DoctorContext)
+  const {dToken, getAppointments, appointments,completeAppointment,cancelAppointment} = useContext(DoctorContext)
+  const {calculateAge,slotDateFormat,currency} = useContext(AppContext);
 
   useEffect(()=>{
     if(dToken){
@@ -43,8 +44,8 @@ const DoctorAppointments = () => {
               <p>{slotDateFormat(item.slotDate, item.slotTime)}</p>
               <p>{currency} {item.fees}</p>
               <div className='flex'>
-                <img className='w-10 cursor-pointer' src={assets.cancel_icon} alt="" />
-                <img className='w-10 cursor-pointer' src={assets.tick_icon} alt="" />
+                <img onClick={()=>cancelAppointment(item._id)} className='w-10 cursor-pointer' src={assets.cancel_icon} alt="" />
+                <img onClick={()=>completeAppointment(item._id)} className='w-10 cursor-pointer' src={assets.tick_icon} alt="" />
               </div>
             </div>
 
