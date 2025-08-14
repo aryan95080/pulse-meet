@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Login from './Pages/Login'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { AdminContext } from './context/AdminContext';
 import Navbar from './components/Navbar';
@@ -13,7 +13,7 @@ import DoctorsList from './Pages/Admin/DoctorsList';
 import { DoctorContext } from './context/DoctorContext';
 import DoctorDashboard from './Pages/Doctor/DoctorDashboard';
 import DoctorProfile from './Pages/Doctor/DoctorProfile';
-import DoctorAppointments from './Pages/Doctor/doctorAppointments';
+import DoctorAppointments from './Pages/Doctor/DoctorAppointments';
 
 const App = () => {
   const {aToken}=useContext(AdminContext)

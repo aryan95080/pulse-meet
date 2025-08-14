@@ -60,6 +60,7 @@ const value={
 useEffect(()=>{
     getDoctorsData()
   },[token])
+
 useEffect(()=>{
     if(token){
       loadUserProfileData()

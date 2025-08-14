@@ -85,7 +85,8 @@ const getProfile = async (req, res) => {
 //API to update user profile
 const updateProfile = async (req, res) => {
   try {
-    const userId = req.body;
+    //const {userId} = req.body;
+    const userId = req.user.id;
     const { name, phone, address, dob, gender } = req.body;
     const imageFile = req.file;
 
@@ -103,7 +104,7 @@ const updateProfile = async (req, res) => {
     if (imageFile) {
       //upload image to cloudinary
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
-        resource_type: "image",
+        resource_type: 'image',
       });
       const imageURL = imageUpload.secure_url;
 
@@ -119,7 +120,8 @@ const updateProfile = async (req, res) => {
 // Api to book appointment
 const bookAppointment = async (req, res) => {
   try {
-    const { userId, docId, slotDate, slotTime } = req.body;
+    const userId = req.user.id;
+    const {docId, slotDate, slotTime } = req.body;
     const docData = await doctorModel.findById(docId).select("-password");
 
     if (!docData.available) {
@@ -171,7 +173,7 @@ const bookAppointment = async (req, res) => {
 // API to get user appointments for frontend my-appointments page
 const listAppointment = async (req, res) => {
   try {
-    const userId = req.user.id; // get userId from token
+    const userId = req.user.id; 
     const appointments = await appointmentModel.find({ userId });
     res.json({ success: true, appointments });
   } catch (error) {
@@ -179,10 +181,13 @@ const listAppointment = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
 // API to Cancel appointment
 const cancelAppointment = async (req, res) => {
   try {
-    const { userId, appointmentId } = req.body;
+    // const { userId, appointmentId } = req.body;
+     const userId = req.user.id; // get user from token
+    const { appointmentId } = req.body;
     const appointmentData = await appointmentModel.findById(appointmentId);
     // verify if appointment belongs to user
     if (appointmentData.userId !== userId) {

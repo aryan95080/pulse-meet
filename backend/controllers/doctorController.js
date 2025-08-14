@@ -55,7 +55,7 @@ const  loginDoctor=async(req,res)=>{
 const appointmentsDoctor=async(req,res)=>{
     try {
         //const {docId}=req.body
-        const docId = req.docId 
+        const docId = req.docId
         const appointments=await appointmentModel.find({docId})
         res.json({success:true,appointments})
 
@@ -67,9 +67,10 @@ const appointmentsDoctor=async(req,res)=>{
 }
 
 // API for mark appointment as completed for doctor panel
-const appointmentComplete=async()=>{
+const appointmentComplete=async(req,res)=>{
     try {
-        const {docId,appointmentId}=req.body
+        const docId = req.docId;
+        const {appointmentId}=req.body
         const appointmentData=await appointmentModel.findById(appointmentId)
         if(appointmentData&&appointmentData.docId===docId){
             await appointmentModel.findByIdAndUpdate(appointmentId,{isCompleted:true})
@@ -87,9 +88,10 @@ const appointmentComplete=async()=>{
 }
 
 // API for cancel appointment for doctor panel
-const appointmentCancel=async()=>{
+const appointmentCancel=async(req,res)=>{
     try {
-        const {docId,appointmentId}=req.body
+        const docId = req.docId;
+        const {appointmentId}=req.body
         const appointmentData=await appointmentModel.findById(appointmentId)
         if(appointmentData&&appointmentData.docId===docId){
             await appointmentModel.findByIdAndUpdate(appointmentId,{cancelled:true})
