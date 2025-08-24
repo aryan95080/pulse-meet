@@ -1,85 +1,109 @@
-import { useContext } from 'react';
-import { AdminContext } from '../../context/AdminContext';
-import { useEffect } from 'react';
-import React from 'react';
-import {assets} from '../../assets/assets.js';
-import { AppContext } from '../../context/AppContext';
+import { useContext } from "react";
+import { AdminContext } from "../../context/AdminContext";
+import { useEffect } from "react";
+import React from "react";
+import { assets } from "../../assets/assets.js";
+import { AppContext } from "../../context/AppContext";
 
-    
-    const Dashboard = () => {
+const Dashboard = () => {
+  const { aToken, cancelAppointment, dashData, getDashdData } =
+    useContext(AdminContext);
+  const { slotDateFormate } = useContext(AppContext);
 
-      const {aToken,cancelAppointment,dashData,getDashdData} = useContext(AdminContext);
-      const {slotDateFormate} = useContext(AppContext);
-
-      useEffect(() => {
-        if(aToken){
-          getDashdData();
-        }
-      }, [aToken]);
-
-      return dashData&&(
-        <div className='m-5'>
-
-          <div className='flex flex-wrap gap-3'>
-            <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-200 shadow-md cursor-pointer hover scale-105 transition-all duration-200'>
-              <img className='w-14' src={assets.doctor_icon} alt="doc_img" />
-              <div className='flex flex-col items-center'>
-                <p className='text-xl font-semibold text-gray-600'>{dashData.doctors}</p>
-                <p className='text-gray-400'>Doctors</p>
-              </div>
-            </div>
-
-            <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-200 shadow-md cursor-pointer hover scale-105 transition-all duration-200'>
-              <img className='w-14' src={assets.appointments_icon} alt="doc_img" />
-              <div className='flex flex-col items-center'>
-                <p className='text-xl font-semibold text-gray-600'>{dashData.appointments}</p>
-                <p className='text-gray-400'>Appointments</p>
-              </div>
-            </div>
-
-            <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-200 shadow-md cursor-pointer hover scale-105 transition-all duration-200'>
-              <img className='w-14' src={assets.patients_icon} alt="doc_img" />
-              <div className='flex flex-col items-center'>
-                <p className='text-xl font-semibold text-gray-600'>{dashData.patients}</p>
-                <p className='text-gray-400'>Patients </p>
-              </div>
-            </div>
-          </div>
-
-          <div className='bg-white p-5 mt-5 rounded border-2 border-gray-200 shadow-md'>
-            <div className='flex items-center gap-2.5 px-4 py-4 mt-10 rounded-t border-gray-200 border'>
-              <img src={assets.list_icon} alt="" />
-              <p className='text-2xl font-semibold text-gray-600 mt-5'>Recent Appointments</p>
-            </div>
-            <div className='pt-4 border border-t-0 rounded-b border-gray-200'>
-              {
-                dashData.latestAppointments.map((item,index)=>(
-                  <div className='flex items-center px-6 py-3 gap-3 hover:bg-gray-200' key={index}>
-                    <img className='rounded-full w-10' src={item.docData.image} alt="" />
-                    <div className='flex-1 text-sm'>
-                      <p className='text-gray-800 font-medium'>{item.docData.name}</p>
-                      <p className='text-gray-600'>{slotDateFormate(item.slotDate)}</p>
-                    </div>
-                    {
-              !item.cancelled ? (
-                <button
-                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                  onClick={() => cancelAppointment(item._id)}
-                >
-                  Cancel
-                </button>
-              ) : (
-                <p className="text-red-500">Cancelled</p>
-              )
-            }
-                  </div>
-                ))
-              }
-            </div>
-          </div>
-
-        </div>
-      )
+  useEffect(() => {
+    if (aToken) {
+      getDashdData();
     }
-    
-    export default Dashboard;
+  }, [aToken]);
+
+  return (
+    dashData && (
+      <div className="m-5">
+        <div className="flex flex-wrap gap-3">
+          <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-200 shadow-md cursor-pointer hover scale-105 transition-all duration-200">
+            <img className="w-14" src={assets.doctor_icon} alt="doc_img" />
+            <div className="flex flex-col items-center">
+              <p className="text-xl font-semibold text-gray-600">
+                {dashData.doctors}
+              </p>
+              <p className="text-gray-400">Doctors</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-200 shadow-md cursor-pointer hover scale-105 transition-all duration-200">
+            <img
+              className="w-14"
+              src={assets.appointments_icon}
+              alt="doc_img"
+            />
+            <div className="flex flex-col items-center">
+              <p className="text-xl font-semibold text-gray-600">
+                {dashData.appointments}
+              </p>
+              <p className="text-gray-400">Appointments</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-200 shadow-md cursor-pointer hover scale-105 transition-all duration-200">
+            <img className="w-14" src={assets.patients_icon} alt="doc_img" />
+            <div className="flex flex-col items-center">
+              <p className="text-xl font-semibold text-gray-600">
+                {dashData.patients}
+              </p>
+              <p className="text-gray-400">Patients </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white p-5 mt-5 rounded border-2 border-gray-200 shadow-md">
+          <div className="flex items-center gap-2.5 px-4 py-4 mt-10 rounded-t border-gray-200 border">
+            <img src={assets.list_icon} alt="" />
+            <p className="text-2xl font-semibold text-gray-600 mt-5">
+              Recent Appointments
+            </p>
+          </div>
+          <div className="pt-4 border border-t-0 rounded-b border-gray-200">
+            {dashData.latestAppointments.map((item, index) => (
+              <div
+                className="flex items-center px-6 py-3 gap-3 hover:bg-gray-200"
+                key={index}
+              >
+                <img
+                  className="rounded-full w-10"
+                  src={item.docData.image}
+                  alt=""
+                />
+                <div className="flex-1 text-sm">
+                  <p className="text-gray-800 font-medium">
+                    {item.docData.name}
+                  </p>
+                  <p className="text-gray-600">
+                    {slotDateFormate(item.slotDate)}
+                  </p>
+                </div>
+                {item.cancelled ? (
+                  <button
+                    className="bg-blue-500 text-red-500 px-3 py-1 rounded hover:bg-red-600"
+                    onClick={() => cancelAppointment(item._id)}
+                  >
+                    Cancelled
+                  </button>
+                ) : item.isCompleted ? (
+                  <p className="text-green-500 border border-green-400 px-3 py-1 rounded ">
+                    Completed
+                  </p>
+                ) : (
+                  <p className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                    Cancel
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  );
+};
+
+export default Dashboard;

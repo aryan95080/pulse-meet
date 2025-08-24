@@ -22,7 +22,7 @@ const Doctors = () => {
     applyFilter();
   }, [doctors, speciality]);
   return (
-    <div className="w-[95%] mx-[2.5%]  rounded py-2.5 bg-transparent backdrop-blur-2xl shadow-lg shadow-blue-100 px-2 ">
+    <div className="w-[9%] mx-[2.5%]  rounded py-2.5 bg-transparent backdrop-blur-2xl shadow-lg shadow-blue-100 px-2 ">
       <p className="text-gray-500">Browse through the doctors speciality.</p>
       <div className="grid gid-col sm:grid-cols-[1.5fr_5fr] items-start gap-2 py-2.5  mt-5 backdrop-blur-2xl shadow-lg shadow-gray-300 px-2">
         
@@ -118,10 +118,10 @@ const Doctors = () => {
             >
               <img className="bg-blue-400 w-full " src={item.image} alt="" />
               <div className="px-2 py-2">
-                <div className="flex items-center gap-2 text-green-500 text-sm">
-                  <p className="bg-green-400 w-2 h-2 rounded-full"></p>
-                  <p>Available Here</p>
-                </div>
+                <div className={`flex items-center gap-2 ${item.available?'text-green-500':'text-gray-400'} text-sm`}>
+                <p className={`${item.available?'bg-green-400':'bg-gray-500'} w-2 h-2 rounded-full`}></p>
+                <p>{item.available?'Available':'Not Availble'}</p>
+              </div>
                 <p>{item.name}</p>
                 <p>{item.speciality}</p>
               </div>

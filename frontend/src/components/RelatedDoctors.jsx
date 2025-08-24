@@ -28,9 +28,9 @@ const RelatedDoctors = ({speciality,docId}) => {
           <div onClick={()=>{navigate(`/appointment/${item._id}`);scrollTo(0,0)}} key={index} className="rounded-xl overflow-hidden bg-cover cursor-pointer transition-all duration-500 bg-transparent backdrop-blur-2xl shadow-lg shadow-blue-100 hover:scale-105">
             <img className="bg-blue-400 w-full " src={item.image} alt="" />
             <div className="px-2 py-2">
-              <div className="flex items-center gap-2 text-green-500 text-sm">
-                <p className="bg-green-400 w-2 h-2 rounded-full"></p>
-                <p>Available Here</p>
+              <div className={`flex items-center gap-2 ${item.available?'text-green-500':'text-gray-400'} text-sm`}>
+                <p className={`${item.available?'bg-green-400':'bg-gray-500'} w-2 h-2 rounded-full`}></p>
+                <p>{item.available?'Available':'Not Availble'}</p>
               </div>
               <p>{item.name}</p>
               <p>{item.speciality}</p>

@@ -119,10 +119,11 @@ const MyAppointments=()=> {
             </div>
             <div></div>
             <div className='flex flex-col justify-end gap-5'>
-              {!item.cancelled&&item.payment && <button className='bg-green-400  text-sm text-white text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Payment Done</button>}
-              {!item.cancelled&&!item.payment&&<button onClick={()=>appointmentRazorpay(item._id)} className='bg-blue-600  text-sm text-white text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Pay Online</button>}
-              {!item.cancelled&&<button onClick={()=>cancelAppointment(item._id)} className='hover:bg-red-600 hover:text-white text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Cancel Appointment</button>}
-              {item.cancelled&&<button className='bg-red-600 text-sm text-white text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Cancelled Appointment</button>}
+              {!item.cancelled&&item.payment &&!item.isCompleted&&<button className='bg-green-400  text-sm text-white text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Payment Done</button>}
+              {!item.cancelled&&!item.payment&&!item.isCompleted&&<button onClick={()=>appointmentRazorpay(item._id)} className='bg-blue-600  text-sm text-white text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Pay Online</button>}
+              {!item.cancelled&&!item.isCompleted&&<button onClick={()=>cancelAppointment(item._id)} className='hover:bg-red-600 hover:text-white text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Cancel Appointment</button>}
+              {item.cancelled&&!item.isCompleted&&<button className='bg-red-600 text-sm text-white text-center sm:min-w-48 py-2 border rounded cursor-pointer'>Cancelled Appointment</button>}
+              {item.isCompleted&&<button className='sm:min-w-48 py-2 border border-green-400 rounded text-green-500'>Completed</button>}
             </div>
           </div>
         ))}

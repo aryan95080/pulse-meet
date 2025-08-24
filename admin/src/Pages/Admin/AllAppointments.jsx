@@ -50,16 +50,14 @@ const AllAppointments = () => {
             </div>
             <p>{currency} {item.amount} /-</p>
             {
-              !item.cancelled ? (
-                <button
-                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-red-600"
+              item.cancelled 
+              ?<button
+                  className="bg-blue-500 text-red-500 px-3 py-1 rounded hover:bg-red-600"
                   onClick={() => cancelAppointment(item._id)}
-                >
-                  Cancel
-                </button>
-              ) : (
-                <p className="text-red-500">Cancelled</p>
-              )
+                >Cancelled</button>
+               :item.isCompleted
+               ? <p className="text-green-500 border border-green-400 px-3 py-1 rounded ">Completed</p>
+               :<p className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-red-600">Cancel</p>
             }
           </div>
         ))}
