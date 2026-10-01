@@ -1,6 +1,6 @@
 import logo from './logo.png'
+
 import add_icon from './add_icon.svg'
-import admin_logo from './admin_logo.svg'
 import appointment_icon from './appointment_icon.svg'
 import cancel_icon from './cancel_icon.svg'
 import doctor_icon from './doctor_icon.svg'
@@ -13,19 +13,22 @@ import appointments_icon from './appointments_icon.svg'
 import earning_icon from './earning_icon.svg'
 import patients_icon from './patients_icon.svg'
 
+// Use the existing logo as the admin logo
+const admin_logo = logo
+
 export const assets = {
-    logo,
-    add_icon,
-    admin_logo,
-    appointment_icon,
-    cancel_icon,
-    doctor_icon,
-    upload_area,
-    home_icon,
-    patients_icon,
-    people_icon,
-    list_icon,
-    tick_icon,
-    appointments_icon,
-    earning_icon
+  logo,
+  admin_logo,
+  add_icon,
+  appointment_icon,
+  cancel_icon,
+  doctor_icon,
+  upload_area,
+  home_icon,
+  patients_icon,
+  people_icon,
+  list_icon,
+  tick_icon,
+  appointments_icon,
+  earning_icon,
 }

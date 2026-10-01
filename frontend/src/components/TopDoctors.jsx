@@ -1,35 +1,422 @@
 import React, { useContext } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import {
+  FiArrowRight,
+  FiCalendar,
+  FiChevronRight,
+  FiUserCheck,
+} from "react-icons/fi";
 
 const TopDoctors = () => {
-  const navigate=useNavigate()
-  const {doctors}=useContext(AppContext)
+  const navigate = useNavigate();
+  const { doctors } = useContext(AppContext);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleDoctorClick = (doctorId) => {
+    navigate(`/appointment/${doctorId}`);
+    scrollToTop();
+  };
+
+  const handleViewAll = () => {
+    navigate("/doctors");
+    scrollToTop();
+  };
+
   return (
-    <div className="w-[95%] mx-[2.5%] px-3 my-5 flex flex-col items-center gap-4 py-16 text-gray-600 bg-transparent backdrop-blur-2xl shadow-lg shadow-gray-300">
-      <h1 className="text-3xl font-medium">Top Doctors to Book</h1>
-      <p className="text-center text-sm sm:w-1/3">
-        Simply broswe through our extensive list of trusted doctors.
-      </p>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 gap-y-6 sm:px-3  text-gray-600 bg-white w-full text-xs sm:text-sm md:text-md ">
-        {doctors.slice(0, 30).map((item, index) => (
-          <div onClick={()=>{navigate(`/appointment/${item._id}`);scrollTo(0,0)}} key={index} className="rounded-xl overflow-hidden bg-cover cursor-pointer transition-all duration-500 bg-transparent backdrop-blur-2xl shadow-lg shadow-blue-100 hover:scale-105">
-            <img className="bg-blue-400 w-full " src={item.image} alt="" />
-            <div className="px-2 py-2">
-              <div className={`flex items-center gap-2 ${item.available?'text-green-500':'text-gray-400'} text-sm`}>
-                <p className={`${item.available?'bg-green-400':'bg-gray-500'} w-2 h-2 rounded-full`}></p>
-                <p>{item.available?'Available':'Not Availble'}</p>
-              </div>
-              <p>{item.name}</p>
-              <p>{item.speciality}</p>
-            </div>
+    <section className="w-full px-3 py-5 sm:px-4 md:px-5 lg:px-6">
+      <div
+        className="
+          mx-auto
+          w-full
+          max-w-7xl
+          overflow-hidden
+          rounded-2xl
+          border
+          border-gray-100
+          bg-gradient-to-b
+          from-white
+          via-white
+          to-blue-50/30
+          px-3
+          py-10
+          shadow-lg
+          shadow-gray-100
+          sm:rounded-3xl
+          sm:px-5
+          sm:py-12
+          md:px-7
+          md:py-14
+          lg:px-10
+          lg:py-16
+        "
+      >
+        {/* =====================================
+            SECTION HEADER
+        ====================================== */}
+        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+          {/* Badge */}
+          <div
+            className="
+              mb-3
+              inline-flex
+              items-center
+              gap-2
+              rounded-full
+              border
+              border-blue-100
+              bg-blue-50
+              px-3
+              py-1.5
+              text-[10px]
+              font-bold
+              uppercase
+              tracking-wider
+              text-blue-600
+              sm:mb-4
+              sm:px-4
+              sm:text-xs
+            "
+          >
+            <FiUserCheck className="text-sm" />
+            Trusted Specialists
           </div>
-        ))}
+
+          {/* Heading */}
+          <h2
+            className="
+              text-2xl
+              font-bold
+              tracking-tight
+              text-gray-800
+              sm:text-3xl
+              md:text-4xl
+            "
+          >
+            Top Doctors to Book
+          </h2>
+
+          {/* Description */}
+          <p
+            className="
+              mt-2
+              max-w-lg
+              text-xs
+              leading-relaxed
+              text-gray-500
+              sm:mt-3
+              sm:text-sm
+              md:text-base
+            "
+          >
+            Simply browse through our extensive list of trusted doctors
+            and find the right specialist for your healthcare needs.
+          </p>
+        </div>
+
+        {/* =====================================
+            DOCTORS GRID
+        ====================================== */}
+        {doctors?.length > 0 ? (
+          <div
+            className="
+              mt-8
+              grid
+              grid-cols-1
+              gap-4
+              sm:grid-cols-2
+              sm:gap-5
+              md:mt-10
+              md:grid-cols-3
+              lg:grid-cols-4
+              xl:grid-cols-5
+            "
+          >
+            {doctors.slice(0, 30).map((item, index) => (
+              <article
+                key={item._id || index}
+                onClick={() => handleDoctorClick(item._id)}
+                className="
+                  group
+                  min-w-0
+                  cursor-pointer
+                  overflow-hidden
+                  rounded-2xl
+                  border
+                  border-gray-100
+                  bg-white
+                  shadow-sm
+                  transition-all
+                  duration-300
+                  hover:-translate-y-1
+                  hover:border-blue-100
+                  hover:shadow-xl
+                  hover:shadow-blue-100/50
+                  active:scale-[0.98]
+                "
+              >
+                {/* Doctor Image */}
+                <div className="relative overflow-hidden bg-blue-50">
+                  <img
+                    src={item.image}
+                    alt={item.name || "Doctor"}
+                    loading="lazy"
+                    className="
+                      aspect-[4/4.2]
+                      w-full
+                      object-cover
+                      object-top
+                      transition-transform
+                      duration-500
+                      group-hover:scale-105
+                    "
+                  />
+
+                  {/* Bottom gradient */}
+                  <div
+                    className="
+                      pointer-events-none
+                      absolute
+                      inset-x-0
+                      bottom-0
+                      h-20
+                      bg-gradient-to-t
+                      from-black/25
+                      to-transparent
+                    "
+                  />
+
+                  {/* Availability Badge */}
+                  <div className="absolute left-2.5 top-2.5 sm:left-3 sm:top-3">
+                    {item.available ? (
+                      <span
+                        className="
+                          inline-flex
+                          items-center
+                          gap-1.5
+                          rounded-full
+                          border
+                          border-white/70
+                          bg-white/90
+                          px-2.5
+                          py-1.5
+                          text-[10px]
+                          font-bold
+                          text-green-600
+                          shadow-sm
+                          backdrop-blur-sm
+                          sm:text-xs
+                        "
+                      >
+                        <span className="relative flex h-2 w-2">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-60" />
+                          <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                        </span>
+                        Available
+                      </span>
+                    ) : (
+                      <span
+                        className="
+                          inline-flex
+                          items-center
+                          gap-1.5
+                          rounded-full
+                          border
+                          border-white/70
+                          bg-white/90
+                          px-2.5
+                          py-1.5
+                          text-[10px]
+                          font-bold
+                          text-gray-500
+                          shadow-sm
+                          backdrop-blur-sm
+                          sm:text-xs
+                        "
+                      >
+                        <span className="h-2 w-2 rounded-full bg-gray-400" />
+                        Not Available
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Hover Arrow */}
+                  <div
+                    className="
+                      absolute
+                      bottom-3
+                      right-3
+                      flex
+                      h-8
+                      w-8
+                      translate-y-2
+                      items-center
+                      justify-center
+                      rounded-full
+                      bg-white/95
+                      text-blue-600
+                      opacity-0
+                      shadow-md
+                      backdrop-blur-sm
+                      transition-all
+                      duration-300
+                      group-hover:translate-y-0
+                      group-hover:opacity-100
+                    "
+                  >
+                    <FiArrowRight className="text-sm" />
+                  </div>
+                </div>
+
+                {/* Doctor Details */}
+                <div className="p-3.5 sm:p-4">
+                  <h3
+                    className="
+                      truncate
+                      text-sm
+                      font-bold
+                      text-gray-800
+                      transition-colors
+                      duration-200
+                      group-hover:text-blue-600
+                      sm:text-base
+                    "
+                  >
+                    {item.name || "Doctor"}
+                  </h3>
+
+                  <p className="mt-1 truncate text-xs font-medium text-gray-500 sm:text-sm">
+                    {item.speciality || "Healthcare Specialist"}
+                  </p>
+
+                  {/* Card Footer */}
+                  <div className="mt-3 flex items-center justify-between border-t border-gray-100 pt-3">
+                    <div className="flex min-w-0 items-center gap-1.5 text-[10px] text-gray-400 sm:text-xs">
+                      <FiCalendar className="shrink-0 text-blue-500" />
+                      <span className="truncate">
+                        Book appointment
+                      </span>
+                    </div>
+
+                    <FiChevronRight
+                      className="
+                        shrink-0
+                        text-sm
+                        text-gray-300
+                        transition-all
+                        duration-300
+                        group-hover:translate-x-1
+                        group-hover:text-blue-500
+                      "
+                    />
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          /* =====================================
+              EMPTY STATE
+          ====================================== */
+          <div
+            className="
+              mx-auto
+              mt-8
+              flex
+              min-h-[240px]
+              max-w-xl
+              flex-col
+              items-center
+              justify-center
+              rounded-2xl
+              border
+              border-dashed
+              border-gray-200
+              bg-gray-50/70
+              px-5
+              py-10
+              text-center
+              sm:mt-10
+            "
+          >
+            <div
+              className="
+                flex
+                h-14
+                w-14
+                items-center
+                justify-center
+                rounded-2xl
+                bg-blue-50
+                text-blue-500
+              "
+            >
+              <FiUserCheck className="text-2xl" />
+            </div>
+
+            <h3 className="mt-4 text-sm font-bold text-gray-800 sm:text-base">
+              No doctors available
+            </h3>
+
+            <p className="mt-1 max-w-sm text-xs leading-relaxed text-gray-400 sm:text-sm">
+              Doctor information will appear here once it becomes
+              available.
+            </p>
+          </div>
+        )}
+
+        {/* =====================================
+            VIEW ALL BUTTON
+        ====================================== */}
+        <div className="mt-8 flex justify-center sm:mt-10">
+          <button
+            type="button"
+            onClick={handleViewAll}
+            className="
+              group
+              inline-flex
+              min-h-[46px]
+              items-center
+              justify-center
+              gap-2
+              rounded-full
+              bg-blue-600
+              px-6
+              py-3
+              text-sm
+              font-semibold
+              text-white
+              shadow-md
+              shadow-blue-200
+              transition-all
+              duration-300
+              hover:-translate-y-0.5
+              hover:bg-blue-700
+              hover:shadow-lg
+              active:scale-95
+              sm:px-7
+            "
+          >
+            <span>View All Doctors</span>
+
+            <FiArrowRight
+              className="
+                text-base
+                transition-transform
+                duration-300
+                group-hover:translate-x-1
+              "
+            />
+          </button>
+        </div>
       </div>
-      <button onClick={()=>{navigate('/doctors');scrollTo(0,0)}} className="hover:bg-blue-600 hover:text-white px-5 py-2 rounded-full text-xl backdrop-blur-lg shadow-gray-900 border-l-3 hover:border-white border-blue-500 border-b-3 shadow-2xl mt-7">
-        more
-      </button>
-    </div>
+    </section>
   );
 };
 
