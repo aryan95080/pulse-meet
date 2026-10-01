@@ -199,6 +199,6 @@ This project is licensed under the **ISC License**.
 
 <div align="center">
 
-Made with ❤️ by [Aryan](https://github.com/aryan95080)
+Made with ❤️ by [Amit Kumar](https://github.com/aryan95080)
 
 </div>
